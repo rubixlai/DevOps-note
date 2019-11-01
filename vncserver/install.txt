@@ -1,4 +1,5 @@
 #服务器安装了桌面环境，可以使用vnc远程连接到服务器的桌面环境进行操作，即使服务器运行在字符模式下。
+yum groupinstall -y "Desktop"
 
 #安装vnc-server
 yum install tigervnc-server
@@ -32,3 +33,11 @@ vncpasswd
 # 设置herry的vnc密码
 su herry
 vncpasswd
+
+#编辑用户目录下的~/.vnc/xstartup 改为gnome session
+sed -i 's/^xterm/#xterm/g' $HOME/.vnc/xstartup
+sed -i 's/^twm/#twm/g' $HOME/.vnc/xstartup
+echo 'gnome-session &' >> $HOME/.vnc/xstartup
+
+service vncserver restart
+
